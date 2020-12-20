@@ -2,16 +2,16 @@
 
 # A React Component - Progress Indicator
 This repo contains a component for displaying a "Progress Indicator" with backdrop & spinner icon.
-Use during async/loading operations such as making a request or performing calculations.
+Use during async loading operations such as making a request or performing calculations.
+Supports progress indication of parallel separate, but related, async events, this component will keep track of a count of active events.
  
 ## See Demo: []()
 Source: [./src/App.js](./src/App.js)
 
 ## Usage 
-```bash
-npm install @jbacon47/react-component-progress-indicator
-```
 ```JSX
+import ProgressIndicatorProvider, { ProgressIndicatorController } from "@jbacon47/react-component-progress-indicator"
+
 function Example() {
   const handleSubmit = (loader) => (event) => {
     event.preventDefault();
@@ -24,14 +24,14 @@ function Example() {
   return (
     <ProgressIndicatorProvider>
         {/* .... */}
-        <ProgressIndicatorControllerContext.Consumer>
+        <ProgressIndicatorController>
         {loader => (
             {/* .... */}
             <form onSubmit={handleSubmit(loader)}>
             <input type="submit" value="Try Me" />
             </form>
         )}
-        </ProgressIndicatorControllerContext.Consumer>
+        </ProgressIndicatorController>
         {/* .... */}
     </ProgressIndicatorProvider>
   )
@@ -46,9 +46,10 @@ Features:
 - Available Controls:
     - `context.signalLoading()` - increments number of active loading events (> zero, show spinner)
     - `context.signalLoaded()` - decrements number of active loading events (== zero, hide spinner)
-- If making multiple async/loading requests, the provider keeps track of the current count
+- If making many parallel async/loading requests, the provider keeps track of the current count
 
 # Development
+I built this because I did not see any out-of-the-box solutions for progress indicators that support multi/parallel async events. Most spinners are simple and require managing properties and visibility state on a single component.
 
 ## Run Demo
 ```bash
