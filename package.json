@@ -1,6 +1,6 @@
 {
   "name": "@jbacon47/react-component-progress-indicator",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "private": false,
