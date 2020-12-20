@@ -5,7 +5,7 @@ This repo contains a component for displaying a "Progress Indicator" with backdr
 Use during async loading operations such as making a request or performing calculations.
 Supports progress indication of parallel separate, but related, async events, this component will keep track of a count of active events.
  
-## See Demo: []()
+## See Demo: [http://jbacon.github.io/react-component-progress-indicator](http://jbacon.github.io/react-component-progress-indicator)
 Source: [./src/App.js](./src/App.js)
 
 ## Usage 
