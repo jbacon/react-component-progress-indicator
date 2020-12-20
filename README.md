@@ -37,19 +37,20 @@ function Example() {
   )
 }
 ```
+
 Exports:
 - `ProcessIndicatorProvider` - Wraps content with spinner backdrop
 - `withProgressIndicator` - Wraps child component with controls
 - `useProgressIndicator` - Wraps child component with controls
 - `ProgressIndicatorController` - The controller context
-Features:
-- Available Controls:
-    - `context.signalLoading()` - increments number of active loading events (> zero, show spinner)
-    - `context.signalLoaded()` - decrements number of active loading events (== zero, hide spinner)
-- If making many parallel async/loading requests, the provider keeps track of the current count
+
+Available Controls:
+  - `context.signalLoading()` - increments number of active loading events (> zero, show spinner)
+  - `context.signalLoaded()` - decrements number of active loading events (== zero, hide spinner)
+  - If making many parallel async/loading requests, the provider keeps track of the current count
 
 # Development
-I built this because I did not see any out-of-the-box solutions for progress indicators that support multi/parallel async events. Most spinners are simple and require managing properties and visibility state on a single component.
+I built this because I did not see any out-of-the-box solutions for progress indicators that support multi/parallel async events. It was also a great learning experience for creating, publish, and deploying standalone components to NPM. Most spinners are simple and require managing properties and visibility state on a single component.
 
 ## Run Demo
 ```bash

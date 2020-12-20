@@ -23,6 +23,7 @@ install:
 before_script:
 - docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm test -- --coverage
 script:
+- docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm run-script build-app
 - docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm run-script build
 after_script:
 - echo "After Script..."
