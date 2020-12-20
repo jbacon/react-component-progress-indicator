@@ -1,18 +1,19 @@
 import './App.css';
-import ProgressIndicatorProvider, { ProgressIndicatorControllerContext } from "./Component"
+import ProgressIndicatorProvider, { ProgressIndicatorController } from "./Component"
 
 function App() {
   return (
     <div>
       <div style={{ height: "50vh", backgroundColor: "red"}}>
         <ProgressIndicatorProvider>
-          Demo Full Screen:
+          Demo Full Screen (2 second timeout)
           <MyDemo />
         </ProgressIndicatorProvider>
       </div>
+      {/* Notice 'position: "relative"', necessary for scoping backdrop to parent container */}
       <div style={{ height: "50vh", position: "relative", backgroundColor: "grey" }}>
         <ProgressIndicatorProvider>
-          Demo Container:
+          Demo Container (2 second timeout)
           <MyDemo />
         </ProgressIndicatorProvider>
       </div>
@@ -22,23 +23,23 @@ function App() {
 
 function MyDemo() {
 
-  const handleSubmit = (loader) => (event) => {
+  const handleSubmit = (progressIndicatorController) => (event) => {
     event.preventDefault();
-    loader.signalLoading();
+    progressIndicatorController.signalLoading();
     // Replace with app logic
     window.setTimeout(() => {
-      loader.signalLoaded();
+      progressIndicatorController.signalLoaded();
     }, 2000);
   }
 
   return (
-    <ProgressIndicatorControllerContext.Consumer>
-      {loader => (
-        <form onSubmit={handleSubmit(loader)}>
+    <ProgressIndicatorController>
+      {progressIndicatorController => (
+        <form onSubmit={handleSubmit(progressIndicatorController)}>
           <input type="submit" value="Try Me" />
         </form>
       )}
-    </ProgressIndicatorControllerContext.Consumer>
+    </ProgressIndicatorController>
   )
 }
 

@@ -15,6 +15,12 @@ import React, { useContext } from 'react';
 const ProgressIndicatorStateContext = React.createContext({}); // Contains state - used only by internal loader 
 const ProgressIndicatorControllerContext = React.createContext({}); // Contains functions that update state - used by children
 
+const ProgressIndicatorController = (props) => (
+    <ProgressIndicatorControllerContext.Consumer>
+        {props.children}
+    </ProgressIndicatorControllerContext.Consumer>
+);
+
 const ProgressIndicator = () => (
     <ProgressIndicatorStateContext.Consumer>
         {loader => (
@@ -90,6 +96,6 @@ const useProgressIndicator = () => { return useContext(ProgressIndicatorControll
 export {
     withProgressIndicator,
     useProgressIndicator,
-    ProgressIndicatorControllerContext,
+    ProgressIndicatorController,
 };
 export default ProgressIndicatorProvider;

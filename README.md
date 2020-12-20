@@ -41,7 +41,7 @@ Exports:
 - `ProcessIndicatorProvider` - Wraps content with spinner backdrop
 - `withProgressIndicator` - Wraps child component with controls
 - `useProgressIndicator` - Wraps child component with controls
-- `ProgressIndicatorControllerContext` - The controller context
+- `ProgressIndicatorController` - The controller context
 Features:
 - Available Controls:
     - `context.signalLoading()` - increments number of active loading events (> zero, show spinner)
