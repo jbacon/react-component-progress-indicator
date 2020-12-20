@@ -37,10 +37,10 @@ before_deploy:
 - echo "Before Deploy..."
 deploy:
   provider: script
-  script: docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm publish
+  script: docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm config set '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' && npm publish
   on:
     branch: main
   skip_cleanup: true
 after_deploy:
-- docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch gh-pages -b gh-pages -d build
+- docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch gh-pages -d build
 - echo "After Deploy..."
