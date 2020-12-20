@@ -1,0 +1,46 @@
+language: bash
+sudo: required
+dist: trusty
+services:
+- docker
+git:
+  depth: 1
+  submodules: false
+branches:
+  only:
+  - main
+cache:
+  directories:
+  - node_modules
+env:
+  global:
+  - PATH=$HOME/.local/bin:$PATH
+  - CI=true
+  - secure: WabEa8C2ZvecMqsliHGjeOj/sAgCfcVM5uR6k2i791csOvT5Sn2DKcoNyMI+KJNuhA1bPYji98coFA+tJEZZW6AEBMpRhssPzzHxLLHqczlN8YvjlRjHHKcguFS9/41yc5EbvcZ/Df/MbfXT9vYXAwL+5u6zJ8as7JI80iNaiVklwbw2Qv3Uk/RT5uXM6xzv/joR45weN+hym4We4a5LdadOCn3EqGL6DyZInv65coV9gAmDkHF+3aUV5/3BpdxMG9X8M5ZXtQPr5mozQQupCTWUzvaDGkjkuLu/YLbg296uZUY4ee1hleecDANUpqf+1O5Pwq3pIdgquAc8SWq5DCZuRbWl/ElFv2FdNBsX2XTT+VlKZKW1KKqBnxN8YO55LpI9yN8Ik77MdjDmhp1EreVIwgTuIkWcAia64sdQ/3p8jxaaIzinpqU7JJJlf68NIdv9eEGcM1rNoBERHjkCobjKar0v49W4p2BWcwmazQ1PmO75qRhe2IC6hTumvG2VYimjYtzjpOJZA9v5pAUzbK7O/RYoHb6/+uC8FrqVveREhoM6QvVftNTR4dVuN1IOuvGcAqflvoDOV10g7C5J43lAgKxebxJ4QvKxWeEWysim98PJdZVzFoYZMqU8fM89SYwUKyiuweR7Y1xTnSiSDRidBD/flfT/Gy2jfVKnIcg=
+before_install:
+- echo "Before Install..."
+install:
+- docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm install
+before_script:
+- docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm test -- --coverage
+script:
+- docker run -e CI=true -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm run-script build
+after_script:
+- echo "After Script..."
+before_cache:
+- echo "Before Cache..."
+after_success:
+- echo "After Success..."
+after_failure:
+- echo "After Failure..."
+before_deploy:
+- echo "Before Deploy..."
+deploy:
+  provider: script
+  script: docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch npm publish
+  on:
+    branch: main
+  skip_cleanup: true
+after_deploy:
+- docker run -e CI=true -e NPM_TOKEN=${NPM_TOKEN} -i -t -v ${PWD}/:/app/ --workdir /app/ node:14-stretch gh-pages -b gh-pages -d build
+- echo "After Deploy..."
